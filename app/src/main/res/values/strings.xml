@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Hotel Reservation</string>
+    <string name="home">Home</string>
+    <string name="rooms">Rooms</string>
+    <string name="account">Account</string>
+</resources>
