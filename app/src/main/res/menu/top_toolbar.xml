@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/topToolBarSearch"
+        android:title="Search"
+        android:icon="@drawable/baseline_search_24"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView"
+        />
     <item android:id="@+id/topToolBarBookHistory"
         android:title="Book History"
         android:icon="@drawable/baseline_book_24"
         app:showAsAction="always"
-
         />
+
 </menu>
