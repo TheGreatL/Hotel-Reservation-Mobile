@@ -1,5 +1,6 @@
 package com.example.hotel_reservation.activities.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,10 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.hotel_reservation.R;
+import com.example.hotel_reservation.activities.RoomDetailsActivity;
 import com.example.hotel_reservation.adapter.RoomsAdapter;
 import com.example.hotel_reservation.interfaces.RecyclerViewInterface;
 import com.example.hotel_reservation.models.Room;
 import com.example.hotel_reservation.services.RoomsService;
+import com.google.android.material.divider.MaterialDividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -63,7 +66,9 @@ public class Home extends Fragment {
         roomsAdapter = new RoomsAdapter(roomArrayList, new RecyclerViewInterface() {
             @Override
             public void onItemClicked(int position, int type) {
-
+                Intent intent = new Intent(getContext(), RoomDetailsActivity.class);
+                intent.putExtra("id",position);
+                startActivity(intent);
             }
 
             @Override
@@ -73,6 +78,11 @@ public class Home extends Fragment {
         });
         recyclerView.setAdapter(roomsAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        MaterialDividerItemDecoration materialDividerItemDecoration = new MaterialDividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL);
+        materialDividerItemDecoration.setLastItemDecorated(false);
+        materialDividerItemDecoration.setDividerInsetEnd(20);
+        materialDividerItemDecoration.setDividerInsetStart(20);
+        recyclerView.addItemDecoration(materialDividerItemDecoration);
 
         // Inflate the layout for this fragment
         return rootView;

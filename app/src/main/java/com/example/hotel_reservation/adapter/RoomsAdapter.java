@@ -50,7 +50,7 @@ public class RoomsAdapter  extends RecyclerView.Adapter<RoomsAdapter.ViewHolder>
 
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public  class ViewHolder extends RecyclerView.ViewHolder {
   TextView name,description,roomDetails,roomCardId;
         ImageView image;
         MaterialCardView roomCard;
@@ -63,15 +63,7 @@ public class RoomsAdapter  extends RecyclerView.Adapter<RoomsAdapter.ViewHolder>
             image = itemView.findViewById(R.id.roomImage);
             roomCard = itemView.findViewById(R.id.roomCard);
 
-            roomCard.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int clickedPosition = getAdapterPosition();
-                    if(clickedPosition == RecyclerView.NO_POSITION){
-                        return;
-                    }
-                }
-            });
+
         }
         @SuppressLint("SetTextI18n")
         public void bind(Room room) {
@@ -80,7 +72,22 @@ public class RoomsAdapter  extends RecyclerView.Adapter<RoomsAdapter.ViewHolder>
             roomDetails.setText(room.getBuildingName()+" "+Integer.toString(room.getFloorNumber()));
             roomCardId.setText(Integer.toString(room.getId()));
             image.setImageBitmap(ImageUtils.convertByteIntoBitmap(room.getImage()));
+            roomCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
+
+                    if(recyclerViewInterface ==null){
+                        return;
+                    }
+                    int clickedPosition = getAdapterPosition();
+                    if(clickedPosition == RecyclerView.NO_POSITION){
+                        return;
+                    }
+                    recyclerViewInterface.onItemClicked(room.getId(),1);
+
+                }
+            });
         }
     }
 }
