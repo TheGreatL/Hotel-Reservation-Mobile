@@ -7,15 +7,9 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.ReturnThis;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.hotel_reservation.R;
-
-import java.util.TimerTask;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -29,7 +23,7 @@ public class SplashActivity extends AppCompatActivity {
 
         new Handler().postDelayed(()->{
 
-            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
         },5000);
     }
