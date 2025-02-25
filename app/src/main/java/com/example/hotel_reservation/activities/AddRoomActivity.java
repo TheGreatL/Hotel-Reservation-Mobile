@@ -3,6 +3,7 @@ package com.example.hotel_reservation.activities;
 import static android.view.View.VISIBLE;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -31,6 +32,7 @@ import com.example.hotel_reservation.R;
 import com.example.hotel_reservation.models.Room;
 import com.example.hotel_reservation.services.RoomsService;
 import com.example.hotel_reservation.utils.ImageUtils;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -112,13 +114,24 @@ public class AddRoomActivity extends AppCompatActivity {
                 roomDescriptionEditTextLayout.setError(null);
                 roomBuildingNameEditTextLayout.setError(null);
                 roomBuildingFloorEditTextLayout.setError(null);
-                if( roomsService.createRoom(new Room(roomName,roomDescription,imageData,roomBuildingName,Integer.parseInt(roomBuildingFloor),true)))  {
-                    Snackbar.make(addRoomButton,"Room Added",Snackbar.LENGTH_SHORT).show();
-                    finish();
-                }
-                else{
-                    Toast.makeText(AddRoomActivity.this, "Adding Failed", Toast.LENGTH_SHORT).show();
-                }
+
+                MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(AddRoomActivity.this);
+                materialAlertDialogBuilder.setTitle("Adding Room")
+                        .setMessage("Are you sure you want to add this room?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                if( roomsService.createRoom(new Room(roomName,roomDescription,imageData,roomBuildingName,Integer.parseInt(roomBuildingFloor),true)))  {
+                                    Toast.makeText(AddRoomActivity.this,"Room Added",Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+                                else{
+                                    Toast.makeText(AddRoomActivity.this, "Adding Failed", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        })
+                        .setNegativeButton("No",null).show();
+
             }
         });
     }
