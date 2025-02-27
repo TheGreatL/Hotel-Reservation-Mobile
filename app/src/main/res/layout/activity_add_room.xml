@@ -8,6 +8,16 @@
     tools:context=".activities.AddRoomActivity"
     android:orientation="vertical"
  >
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Back"
+        style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
+        app:icon="@drawable/arrow_back"
+        app:iconTint="@color/black"
+        android:gravity="center"
+        android:id="@+id/backButton"
+        />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -123,6 +133,27 @@
                     android:autofillHints="name"
                     android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:hint="Room Price"
+                app:endIconMode="clear_text"
+                app:counterEnabled="true"
+                app:counterMaxLength="200"
+                app:errorEnabled="true"
+                android:id="@+id/roomPriceEditTextLayout"
+                >
+                <EditText
+                    android:id="@+id/roomPriceEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:autofillHints="name"
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
 
         </LinearLayout>
 

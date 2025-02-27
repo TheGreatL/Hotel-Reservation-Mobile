@@ -10,7 +10,7 @@ public class Database extends SQLiteOpenHelper {
 
 
     public Database(@Nullable Context context) {
-        super(context, "HotelReservation", null, 1);
+        super(context, "HotelReservation", null, 3);
     }
 
     @Override
@@ -19,8 +19,10 @@ public class Database extends SQLiteOpenHelper {
         .execSQL("CREATE TABLE IF NOT EXISTS Users(userId INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "firstName VARCHAR(100),lastName VARCHAR(100)," +
                 "email VARCHAR(100) UNIQUE,password VARCHAR(100));");
-        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS Rooms(roomId INTEGER PRIMARY KEY AUTOINCREMENT," +
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS Rooms(" +
+                "roomId INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "name VARCHAR(100), description TEXT, image BLOB," +
+                "price REAL," +
                 "floorNumber INTEGER," +
                 "buildingName VARCHAR(100)," +
                 "isAvailable BOOLEAN);");

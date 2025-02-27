@@ -26,12 +26,10 @@ public class RoomsAdapter  extends RecyclerView.Adapter<RoomsAdapter.ViewHolder>
         this.roomArrayList = typeArrayList;
         this.recyclerViewInterface = recyclerViewInterface;
     }
-
     @NonNull
     @Override
     public RoomsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.rooms_recyclerview_layout, parent, false));
-
     }
 
     @Override
@@ -51,13 +49,14 @@ public class RoomsAdapter  extends RecyclerView.Adapter<RoomsAdapter.ViewHolder>
     }
 
     public  class ViewHolder extends RecyclerView.ViewHolder {
-  TextView name,description,roomDetails,roomCardId;
+  TextView name,description,roomDetails,roomCardId,roomPrice;
         ImageView image;
         MaterialCardView roomCard;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.roomName);
             description = itemView.findViewById(R.id.roomDescription);
+            roomPrice = itemView.findViewById(R.id.roomPrice);
             roomDetails = itemView.findViewById(R.id.roomDetails);
             roomCardId = itemView.findViewById(R.id.roomCardId);
             image = itemView.findViewById(R.id.roomImage);
@@ -67,9 +66,11 @@ public class RoomsAdapter  extends RecyclerView.Adapter<RoomsAdapter.ViewHolder>
         }
         @SuppressLint("SetTextI18n")
         public void bind(Room room) {
+
             name.setText(room.getName());
             description.setText(room.getDescription());
             roomDetails.setText(room.getBuildingName()+" "+Integer.toString(room.getFloorNumber()));
+            roomPrice.setText(Double.toString(room.getPrice()));
             roomCardId.setText(Integer.toString(room.getId()));
             image.setImageBitmap(ImageUtils.convertByteIntoBitmap(room.getImage()));
             roomCard.setOnClickListener(new View.OnClickListener() {

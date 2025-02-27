@@ -1,5 +1,6 @@
 package com.example.hotel_reservation.activities;
 
+import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 import android.Manifest;
@@ -41,10 +42,11 @@ public class AddRoomActivity extends AppCompatActivity {
 
     ActivityResultLauncher<Intent> resultLauncher;
     ImageView cameraImage;
-    EditText roomNameEditText,roomDescriptionEditText,roomBuildingFloorEditText,roomBuildingNameEditText;
-    TextInputLayout roomNameEditTextLayout,roomDescriptionEditTextLayout,roomBuildingNameEditTextLayout,roomBuildingFloorEditTextLayout;
+    EditText roomNameEditText,roomDescriptionEditText,roomBuildingFloorEditText,roomBuildingNameEditText,roomPriceEditText;
+    TextInputLayout roomNameEditTextLayout,roomDescriptionEditTextLayout,roomBuildingNameEditTextLayout,roomBuildingFloorEditTextLayout,roomPriceEditTextLayout;
     byte[] imageData;
     RoomsService roomsService;
+    Button addImageButton,back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +60,16 @@ public class AddRoomActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        Button addImageButton = findViewById(R.id.addImageButton);
+        back = findViewById(R.id.backButton);
+        back.setOnClickListener(view -> finish());
+        addImageButton = findViewById(R.id.addImageButton);
         addImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkCameraPermissionAndOpenCamera();
+            }
+        });
+        cameraImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 checkCameraPermissionAndOpenCamera();
@@ -70,6 +80,7 @@ public class AddRoomActivity extends AppCompatActivity {
         roomDescriptionEditText = findViewById(R.id.roomDescriptionEditText);
         roomBuildingNameEditText = findViewById(R.id.roomBuildingNameEditText);
         roomBuildingFloorEditText = findViewById(R.id.roomBuildingFloorEditText);
+        roomPriceEditText = findViewById(R.id.roomPriceEditText);
 
 
 
@@ -78,6 +89,7 @@ public class AddRoomActivity extends AppCompatActivity {
         roomDescriptionEditTextLayout = findViewById(R.id.roomDescriptionEditTextLayout);
         roomBuildingNameEditTextLayout = findViewById(R.id.roomBuildingNameEditTextLayout);
         roomBuildingFloorEditTextLayout = findViewById(R.id.roomBuildingFloorEditTextLayout);
+        roomPriceEditTextLayout = findViewById(R.id.roomPriceEditTextLayout);
 
         Button addRoomButton = findViewById(R.id.saveAddRoomButton);
         addRoomButton.setOnClickListener(new View.OnClickListener() {
@@ -87,33 +99,42 @@ public class AddRoomActivity extends AppCompatActivity {
                 String roomDescription = String.valueOf(roomDescriptionEditText.getText());
                 String roomBuildingName = String.valueOf(roomBuildingNameEditText.getText());
                 String roomBuildingFloor = String.valueOf(roomBuildingFloorEditText.getText());
+                String roomPrice = String.valueOf(roomPriceEditText.getText());
 
                 if(roomName.isBlank() || roomName.isEmpty()){
                     roomNameEditTextLayout.setError("Fill out the room name first");
                     return ;
                 }
+                roomNameEditTextLayout.setError(null);
                 if(roomDescription.isBlank() || roomDescription.isEmpty()){
                     roomDescriptionEditTextLayout.setError("Fill out the room description first");
                     return ;
                 }
+                roomDescriptionEditTextLayout.setError(null);
                 if(roomBuildingName.isBlank() || roomBuildingName.isEmpty()){
                     roomBuildingNameEditTextLayout.setError("Fill out the room building name first");
                     return ;
                 }
+                roomBuildingNameEditTextLayout.setError(null);
                 if(roomBuildingFloor.isBlank() || roomBuildingFloor.isEmpty()){
                     roomBuildingFloorEditTextLayout.setError("Fill out the room floor name first");
                     return ;
                 }
-
+                roomBuildingFloorEditTextLayout.setError(null);
                 if(imageData ==null){
                     Toast.makeText(AddRoomActivity.this, "Add Image First", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if(roomPrice.isBlank() || roomPrice.isEmpty()){
+                    roomPriceEditTextLayout.setError("Fill out the room price first");
+                    return ;
+                }
+                roomPriceEditTextLayout.setError(null);
 
-                roomNameEditTextLayout.setError(null);
-                roomDescriptionEditTextLayout.setError(null);
-                roomBuildingNameEditTextLayout.setError(null);
-                roomBuildingFloorEditTextLayout.setError(null);
+
+
+
+
 
                 MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(AddRoomActivity.this);
                 materialAlertDialogBuilder.setTitle("Adding Room")
@@ -121,7 +142,7 @@ public class AddRoomActivity extends AppCompatActivity {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                if( roomsService.createRoom(new Room(roomName,roomDescription,imageData,roomBuildingName,Integer.parseInt(roomBuildingFloor),true)))  {
+                                if( roomsService.createRoom(new Room(roomName,roomDescription,imageData,roomBuildingName,Integer.parseInt(roomBuildingFloor),true,Double.parseDouble(roomPrice))))  {
                                     Toast.makeText(AddRoomActivity.this,"Room Added",Toast.LENGTH_SHORT).show();
                                     finish();
                                 }
@@ -148,10 +169,13 @@ public class AddRoomActivity extends AppCompatActivity {
                            }
                             Uri imageUri = data.getData();
                             imageData =  ImageUtils.getImageDataFromUri(AddRoomActivity.this, imageUri);
-                            cameraImage.setVisibility(VISIBLE);
+                            addImageButton.setVisibility(GONE);
                             cameraImage.setImageURI(imageUri);
+                            cameraImage.setVisibility(VISIBLE);
                         } catch (Exception e) {
                             Toast.makeText(AddRoomActivity.this, "No image Selected", Toast.LENGTH_SHORT).show();
+                            addImageButton.setVisibility(VISIBLE);
+                            cameraImage.setVisibility(GONE);
                         }
                     }
                 }

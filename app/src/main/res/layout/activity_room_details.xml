@@ -10,16 +10,44 @@
     android:padding="5dp"
     >
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="Back"
-        style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
-        app:icon="@drawable/arrow_back"
-        app:iconTint="@color/black"
-        android:gravity="center"
-        android:id="@+id/backButton"
-        />
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+       <Button
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:contentDescription="Back"
+           style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
+           app:icon="@drawable/arrow_back"
+           app:iconTint="@color/black"
+           android:gravity="center"
+           android:id="@+id/backButton"
+           />
+
+       <Button
+           android:id="@+id/editButton"
+           style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_centerInParent="true"
+           android:contentDescription="Delete"
+           android:gravity="center"
+           app:icon="@drawable/baseline_brush_24"
+           app:iconTint="@color/black" />
+
+       <Button
+           android:id="@+id/deleteButton"
+           style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentEnd="true"
+
+           android:contentDescription="Delete"
+           android:gravity="center"
+           app:icon="@drawable/baseline_delete_24"
+           app:iconTint="@color/black" />
+
+   </RelativeLayout>
     <ImageView
         android:id="@+id/roomImage"
         android:layout_width="match_parent"

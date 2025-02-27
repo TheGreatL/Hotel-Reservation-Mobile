@@ -41,6 +41,7 @@ public class RoomsService {
         values.put("buildingName",room.getBuildingName());
         values.put("floorNumber",room.getFloorNumber());
         values.put("isAvailable",room.isAvailable());
+        values.put("price",room.getPrice());
         return writable.insert("Rooms",null,values)>1;
     }
 
@@ -53,8 +54,31 @@ public class RoomsService {
         cursor.close();
         return room;
     }
-    public Room editRoom(Room room){
+    public Room editRoom(Room room) throws Error{
+
+        Cursor cursor = readable.rawQuery("SELECT * FROM Rooms WHERE roomId =?",new String[]{Integer.toString(room.getId())});
+        if(cursor.getColumnCount() ==0) throw new Error("Room Not Found");
+
+
+        ContentValues newValues = new ContentValues();
+        newValues.put("name",room.getName());
+        newValues.put("description",room.getDescription());
+        newValues.put("image",room.getImage());
+        newValues.put("buildingName",room.getBuildingName());
+        newValues.put("floorNumber",room.getFloorNumber());
+        newValues.put("isAvailable",room.isAvailable());
+        newValues.put("price",room.getPrice());
+
+        if(writable.update("Rooms",newValues,"roomId =?",new String[]{Integer.toString(room.getId())}) >0){
+           return getRoomById(room.getId());
+        }
+
+
         return null;
+    }
+    public boolean deleteRoom(int roomId){
+        long  rowsAffected = writable.delete("Rooms","roomId = ?",new String[]{Integer.toString(roomId)});
+        return rowsAffected >0;
     }
 
     @SuppressLint("Range")
@@ -65,6 +89,7 @@ public class RoomsService {
                 cursor.getBlob(cursor.getColumnIndex("image")),
                 cursor.getString(cursor.getColumnIndex("buildingName")),
                 cursor.getInt(cursor.getColumnIndex("floorNumber")),
-                cursor.getInt(cursor.getColumnIndex("isAvailable"))!=-1);
+                cursor.getInt(cursor.getColumnIndex("isAvailable"))==1,
+                cursor.getFloat(cursor.getColumnIndex("price")));
     }
 }

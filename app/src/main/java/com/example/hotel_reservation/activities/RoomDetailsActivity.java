@@ -1,6 +1,7 @@
 package com.example.hotel_reservation.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,11 +24,12 @@ import com.google.android.material.snackbar.Snackbar;
 public class RoomDetailsActivity extends AppCompatActivity {
 
 
-    Button bookRoom,back;
+    Button bookRoom,back,delete,edit;
     TextView name,description,details;
     ImageView roomImage;
     RoomsService roomService;
     Room room;
+    int ROOM_ID;
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        ROOM_ID = getIntent().getIntExtra("id",0);
         roomService = new RoomsService(this);
         bookRoom = findViewById(R.id.bookRoomButton);
         back = findViewById(R.id.backButton);
@@ -50,16 +53,52 @@ public class RoomDetailsActivity extends AppCompatActivity {
         bookRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(bookRoom,"Room booked",Snackbar.LENGTH_SHORT).show();
+                Intent intent =new Intent(RoomDetailsActivity.this, BookingPage.class);
+                intent.putExtra("id",ROOM_ID);
+                startActivity(intent);
+            }
+        });
+        delete = findViewById(R.id.deleteButton);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(roomService.deleteRoom(ROOM_ID)){
+                    Toast.makeText(RoomDetailsActivity.this, "Room Deleted", Toast.LENGTH_SHORT).show();
+                    finish();
+                }else{
+
+                    Snackbar.make(delete,"Not Deleted",Snackbar.LENGTH_SHORT).show();
+                }
             }
         });
 
+
         try{
-            room  = roomService.getRoomById(getIntent().getIntExtra("id",0));
+            room  = roomService.getRoomById(ROOM_ID);
             name.setText(room.getName());
             description.setText(room.getDescription());
             details.setText(room.getId()+" "+room.getBuildingName()+" "+room.getFloorNumber());
             roomImage.setImageBitmap(ImageUtils.convertByteIntoBitmap(room.getImage()));
+
+            edit = findViewById(R.id.editButton);
+            edit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Room newRoom = roomService.editRoom(new Room(ROOM_ID,"Update","update",room.getImage(),"update",1,true,room.getPrice()));
+                    if( newRoom!= null){
+                        Toast.makeText(RoomDetailsActivity.this, "Room Edited", Toast.LENGTH_SHORT).show();
+                        room = newRoom;
+                        name.setText(room.getName());
+                        description.setText(room.getDescription());
+                        details.setText(room.getId()+" "+room.getBuildingName()+" "+room.getFloorNumber());
+                        roomImage.setImageBitmap(ImageUtils.convertByteIntoBitmap(room.getImage()));
+                    }else{
+
+                        Snackbar.make(delete,"Room not edit",Snackbar.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
         } catch (Error e) {
             Toast.makeText(this, "Room Not Found", Toast.LENGTH_SHORT).show();
             finish();

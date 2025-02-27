@@ -52,6 +52,12 @@
             android:layout_height="wrap_content"
             android:text="hees"
             />
+        <TextView
+            android:id="@+id/roomPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="hees"
+            />
 
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

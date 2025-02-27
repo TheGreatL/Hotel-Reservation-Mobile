@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/main"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+tools:context=".activities.BookingPage"
+android:padding="5dp">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Back"
+        style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
+        app:icon="@drawable/arrow_back"
+        app:iconTint="@color/black"
+        android:gravity="center"
+        android:id="@+id/backButton"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Book this room"
+        android:gravity="center"
+        android:textSize="20sp"
+        />
+
+</LinearLayout>
+
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/roomName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+
+            />
+        <TextView
+            android:id="@+id/roomDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:textColor="@color/black"
+            />
+        <TextView
+            android:id="@+id/roomDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="details"
+            android:textColor="@color/black"
+            android:layout_marginTop="5dp"
+            />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Starting Date"
+            app:endIconMode="clear_text"
+            app:startIconDrawable="@drawable/baseline_calendar_month_24"
+            android:id="@+id/fromDateLayout"
+
+            >
+            <EditText
+                android:id="@+id/fromDate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Time"
+            app:endIconMode="clear_text"
+            app:startIconDrawable="@drawable/baseline_access_time_24"
+            android:id="@+id/fromTimeLayout">
+            <EditText
+                android:id="@+id/fromTime"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Ending Date"
+            app:endIconMode="clear_text"
+            app:startIconDrawable="@drawable/baseline_calendar_month_24"
+            android:id="@+id/toDateLayout"
+            >
+
+            <EditText
+                android:id="@+id/toDate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Time"
+            app:startIconDrawable="@drawable/baseline_access_time_24"
+            app:endIconMode="clear_text"
+            android:id="@+id/toTimeLayout"
+            >
+
+            <EditText
+                android:id="@+id/toTime"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            >
+            <Button
+                android:id="@+id/cashButton"
+                style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cash"
+                app:icon="@drawable/cash"
+                />
+            <Button
+                android:id="@+id/cardButton"
+                style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Card"
+                app:icon="@drawable/baseline_credit_card_24"
+
+                />
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+    </LinearLayout>
+</ScrollView>
+<Button
+    android:id="@+id/bookRoomButton"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Book this room"/>
+
+</LinearLayout>
